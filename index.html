@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Educational beta for exploring a fixed, AI-classified sample of public SEC Exhibit 10 disclosures. Not financial or legal advice.">
+  <meta name="color-scheme" content="light dark">
+  <title>SEC Disclosure Trend Analyzer — Beta</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#overview" aria-label="SEC Contract Research home"><span class="brand-mark" aria-hidden="true">S / C</span><span><strong>SEC Contract Research</strong><small>Public filings. Structured research.</small></span></a>
+      <span class="beta-badge">BETA · FIXED SAMPLE</span>
+    </div>
+    <nav class="nav-inner" aria-label="Main navigation"><a href="#overview" class="active">Overview</a><a href="#evidence">Source evidence</a><a href="#methodology">Methodology & coverage</a><span>Research release · Nov 4, 2026</span></nav>
+  </header>
+  <main id="main" class="page">
+    <section id="overview" aria-labelledby="page-title">
+      <div class="page-heading"><div><h1 id="page-title">SEC Disclosure Trend Analyzer</h1><p class="subtitle">Explore contract disclosure activity within a selected research sample.</p></div><button id="download" class="button primary" type="button" disabled>Download selection <span aria-hidden="true">↓</span></button></div>
+      <div class="notice" role="note"><strong>Educational & research use only.</strong> No guarantee of accuracy, completeness or reliability. <strong>Do not rely on this information for financial, investment, commercial, legal or other decisions.</strong> Consult the original SEC filings. This project is not affiliated with or endorsed by the SEC.</div>
+      <div id="error" class="error" role="alert" hidden><strong>The research data could not be loaded.</strong><p>Please reload the page. A copy of the research release remains available below.</p><button type="button" id="retry" class="button">Try again</button><a href="./downloads/research-release.zip">Download research release</a></div>
+      <div class="filter-panel" aria-label="Filter the selected sample">
+        <label for="industry">Industry<select id="industry" aria-label="Industry" disabled><option value="">All industries</option></select></label>
+        <label for="year">Filing year<select id="year" aria-label="Filing year" disabled><option value="">All sampled years</option></select></label>
+        <label for="form">Filing form<select id="form" aria-label="Filing form" disabled><option value="">All forms</option></select></label>
+        <label for="category">Primary category<select id="category" aria-label="Primary category" disabled><option value="">All categories</option></select></label>
+        <button type="button" id="reset" class="button quiet" disabled>Reset filters</button>
+      </div>
+      <div class="selection-caption" id="selection-caption" role="status" aria-live="polite">Loading the fixed research sample…</div>
+      <div class="metrics" aria-label="Selection summary">
+        <div class="metric"><span class="metric-label">Exhibit records</span><strong id="metric-records">—</strong><small>Attachments, not new deals</small></div>
+        <div class="metric"><span class="metric-label">Selected issuers</span><strong id="metric-issuers">—</strong><small>Within the research panel</small></div>
+        <div class="metric"><span class="metric-label">Categorized exhibits</span><strong id="metric-categorized">—</strong><small>Substantive primary category</small></div>
+        <div class="metric"><span class="metric-label">Review with care</span><strong id="metric-review">—</strong><small>Medium-confidence labels</small></div>
+      </div>
+      <div class="charts">
+        <section class="panel" aria-labelledby="category-title"><div class="panel-heading"><h2 id="category-title">What was disclosed</h2><span>Primary category · exhibits</span></div><div id="category-chart" class="category-chart"></div><p class="chart-note">Choose a category to filter the sample.</p></section>
+        <section class="panel" aria-labelledby="year-title"><div class="panel-heading"><h2 id="year-title">Sample by filing year</h2><span>Exhibit attachments</span></div><div id="year-chart" class="year-chart"></div><p class="chart-note">Separate sampled years: 2021, 2023 and 2025. No observations for 2022 or 2024. These counts are not a continuous market trend.</p><div class="coverage-callout"><strong>Context matters.</strong><p>The sample was assembled for feasibility testing. Changes between selected years do not establish changes in industry-wide contract activity.</p></div></section>
+      </div>
+    </section>
+    <section id="evidence" class="evidence-section" aria-labelledby="evidence-title">
+      <div class="section-heading"><div><h2 id="evidence-title">Behind the numbers</h2><p class="subtitle">Inspect the classification and follow each record back to EDGAR.</p></div><label for="search" class="search-label"><span class="sr-only">Find a company or document</span><input id="search" type="search" placeholder="Find a company or document…" disabled></label></div>
+      <div class="table-shell"><table><caption class="sr-only">Filtered SEC exhibit records. Source links open in a new tab.</caption><thead><tr><th scope="col">Document</th><th scope="col">Primary category</th><th scope="col">Filed</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead><tbody id="records"><tr><td colspan="4" class="empty">Loading source records…</td></tr></tbody></table></div>
+      <div class="pagination"><span id="page-summary" aria-live="polite"></span><div><button id="previous" type="button" class="button" disabled>← Previous</button><button id="next" type="button" class="button" disabled>Next →</button></div></div>
+    </section>
+    <section id="methodology" class="methodology" aria-labelledby="method-title">
+      <div class="section-heading"><div><h2 id="method-title">Methodology & coverage</h2><p class="subtitle">Know the scope before interpreting the results.</p></div><a class="text-link" href="./downloads/research-release.zip" download>Full research release ↓</a></div>
+      <div class="method-grid"><div><h3>A selected sample</h3><p>114 Exhibit 10 attachments from 19 issuers and 77 filings across technology, financial services, healthcare, industrials and energy. Coverage includes 2021, 2023 and 2025 filings on Forms 10-K, 10-Q and 8-K.</p><p>Healthcare/2021/8-K and energy/2025/8-K were not filled. The sample is purposive and is not representative of entire industries.</p></div><div><h3>AI-prepared classifications</h3><p>AI assigns broad primary categories, secondary tags and brief reasons during data preparation. Ambiguous records receive additional review. The classifications have not been independently accuracy-validated; confidence labels are judgments, not probabilities.</p><p>Visitor queries filter prepared metadata. No AI processing or live SEC scraping occurs in this dashboard.</p></div><div><h3>What the counts mean</h3><p>Counts measure exhibit attachments, including award forms, policies, amendments, restatements, addenda and bundled documents. They do not measure unique agreements, new transactions, transaction value or economic growth.</p><p>Filing dates are used, not agreement execution dates. Some records have source-version or date-consistency flags.</p></div><div><h3>Sources & retention</h3><p>Sources are publicly available EDGAR documents, retrieved under SEC fair-access conditions. Only metadata, classifications, short reasons and source links are retained in this dashboard. Full contract texts are not hosted.</p><p>Source availability may change. Always consult the original filing and appropriate qualified professionals.</p></div></div>
+      <details><summary>Specific classification and date limitations</summary><p>Eight records are intentionally in Other because the taxonomy does not separately classify indemnification, governance appointments, shareholder cooperation or personal aircraft use. Six records have medium-confidence labels. Primary category totals do not double-count secondary tags.</p><p>D076 and D077 preserve the SEC-published 2021 filing date while flagging a differing 2022 acceptance/accession year. Later source response hashes differed from the original study for ten records; this is not proof of a change in legal substance. The JSON download preserves provenance flags.</p></details>
+      <p class="long-disclaimer">Educational and research use only. This independent project is not affiliated with or endorsed by the SEC. Its data, classifications, statistics and analyses may contain errors or omissions and are provided without any guarantee of accuracy, completeness or reliability. Do not rely on this information for financial, investment, commercial, legal or other decisions. Consult original SEC filings and qualified professionals.</p>
+    </section>
+  </main>
+  <footer><span>SEC Disclosure Trend Analyzer · Beta v0.1</span><span>Fixed research sample · Release November 4, 2026</span></footer>
+  <dialog id="detail" aria-labelledby="detail-title"><div class="dialog-heading"><span class="eyebrow" id="detail-id">SOURCE RECORD</span><button type="button" class="icon-button" id="close-detail" aria-label="Close record details">×</button></div><h2 id="detail-title"></h2><p id="detail-company" class="subtitle"></p><div id="detail-content"></div><div class="dialog-actions" id="detail-links"></div><p class="dialog-disclaimer">Research classification, not legal review. Check the original source before interpreting this record.</p></dialog>
+  <noscript><p class="notice">JavaScript is needed to filter the research dataset. You can <a href="./downloads/research-release.zip">download the complete metadata release</a> instead.</p></noscript>
+</body>
+</html>
